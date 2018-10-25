@@ -1,0 +1,14 @@
+D:\OfficerSoft\Desenvolvimento\Genéricos\MS .NET\usys.site.officer.responder\SiteResponder\bin\Debug\SiteResponder.exe.config
+D:\OfficerSoft\Desenvolvimento\Genéricos\MS .NET\usys.site.officer.responder\SiteResponder\bin\Debug\SiteResponder.exe
+D:\OfficerSoft\Desenvolvimento\Genéricos\MS .NET\usys.site.officer.responder\SiteResponder\bin\Debug\SiteResponder.pdb
+D:\OfficerSoft\Desenvolvimento\Genéricos\MS .NET\usys.site.officer.responder\SiteResponder\obj\Debug\SiteResponder.SiteResponder.resources
+D:\OfficerSoft\Desenvolvimento\Genéricos\MS .NET\usys.site.officer.responder\SiteResponder\obj\Debug\SiteResponder.csproj.GenerateResource.Cache
+D:\OfficerSoft\Desenvolvimento\Genéricos\MS .NET\usys.site.officer.responder\SiteResponder\obj\Debug\SiteResponder.exe
+D:\OfficerSoft\Desenvolvimento\Genéricos\MS .NET\usys.site.officer.responder\SiteResponder\obj\Debug\SiteResponder.pdb
+D:\OfficerSoft\Desenvolvimento\Genéricos\MS .NET\usys.site.officer.responder\SiteResponder\obj\Debug\SiteResponder.ProjectInstaller.resources
+D:\OfficerSoft\Desenvolvimento\Genéricos\MS .NET\usys.site.officer.responder\SiteResponder\bin\Debug\MySql.Data.dll
+D:\OfficerSoft\Desenvolvimento\Genéricos\MS .NET\usys.site.officer.responder\SiteResponder\bin\Debug\Google.Protobuf.dll
+D:\OfficerSoft\Desenvolvimento\Genéricos\MS .NET\usys.site.officer.responder\SiteResponder\bin\Debug\MySql.Data.xml
+T:\Diego\SQLWebSiteManager\usys.site.officer.responder\SiteResponder\bin\Debug\SiteResponder.exe.config
+T:\Diego\SQLWebSiteManager\usys.site.officer.responder\SiteResponder\obj\Debug\SiteResponder.exe
+T:\Diego\SQLWebSiteManager\usys.site.officer.responder\SiteResponder\obj\Debug\SiteResponder.pdb

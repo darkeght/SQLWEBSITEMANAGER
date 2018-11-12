@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace SQLWebSiteManager
@@ -23,7 +24,7 @@ namespace SQLWebSiteManager
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string CompletPath = Path.GetTempPath() + "\\SQLWEBSITEMANAGER";
+            string CompletPath = Assembly.GetExecutingAssembly().Location.Replace("\\SQLWebSiteManager.exe", "") + "\\SQLWEBSITEMANAGERCONFIG";
 
             if (!Directory.Exists(CompletPath))
             {
@@ -39,7 +40,7 @@ namespace SQLWebSiteManager
 
         private void Comfiguracoes_Load(object sender, EventArgs e)
         {
-            string CompletPath = Path.GetTempPath() + "\\SQLWEBSITEMANAGER";
+            string CompletPath = Assembly.GetExecutingAssembly().Location.Replace("\\SQLWebSiteManager.exe", "") + "\\SQLWEBSITEMANAGERCONFIG";
 
             if (!File.Exists(CompletPath + "\\SQLWEBSITE.CONFIG"))
                 return;

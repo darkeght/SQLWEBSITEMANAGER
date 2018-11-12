@@ -20,3 +20,14 @@ C:\Users\Paulo\Desktop\SQLWebSiteManager\SQLWebSiteManager\SQLWebSiteManager\SQL
 C:\Users\Paulo\Desktop\SQLWebSiteManager\SQLWebSiteManager\SQLWebSiteManager\SQLWebSiteManager\obj\Debug\SQLWebSiteManager.Properties.Resources.resources
 C:\Users\Paulo\Desktop\SQLWebSiteManager\SQLWebSiteManager\SQLWebSiteManager\SQLWebSiteManager\obj\Debug\SQLWebSiteManager.csproj.GenerateResource.Cache
 C:\Users\felip\source\repos\SQLWebSiteManager\SQLWebSiteManager\obj\Debug\SQLWebSiteManager.csprojAssemblyReference.cache
+C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteManager\bin\Debug\SQLWebSiteManager.exe.config
+C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteManager\bin\Debug\SQLWebSiteManager.exe
+C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteManager\bin\Debug\SQLWebSiteManager.pdb
+C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteManager\bin\Debug\MySql.Data.dll
+C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteManager\obj\Debug\SQLWebSiteManager.csprojResolveAssemblyReference.cache
+C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteManager\obj\Debug\SQLWebSiteManager.Comfiguracoes.resources
+C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteManager\obj\Debug\SQLWebSiteManager.Form1.resources
+C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteManager\obj\Debug\SQLWebSiteManager.Properties.Resources.resources
+C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteManager\obj\Debug\SQLWebSiteManager.csproj.GenerateResource.Cache
+C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteManager\obj\Debug\SQLWebSiteManager.exe
+C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteManager\obj\Debug\SQLWebSiteManager.pdb

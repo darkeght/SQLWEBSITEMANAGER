@@ -13,8 +13,8 @@ namespace SQLWebSiteManager
 
         public ConsultSQL()
         {
-            string CompletPath = Assembly.GetExecutingAssembly().Location;
-            var vcontent = ReadText.GetInstace().LeArquivoTxt(CompletPath.Substring(0, CompletPath.LastIndexOf("\\") + 1) + "\\SQLWEBSITE.CONFIG").Split('|');
+            string CompletPath = Assembly.GetExecutingAssembly().Location.Replace("\\SQLWebSiteManager.exe", "");
+            var vcontent = ReadText.GetInstace().LeArquivoTxt(CompletPath + "\\SQLWEBSITEMANAGERCONFIG\\SQLWEBSITE.CONFIG").Split('|');
             content = new String[9];
 
             //  informações locais
@@ -99,33 +99,81 @@ namespace SQLWebSiteManager
             return retorno;
         }
 
-        internal void RespostaDeConsultaCertidaoCasamento(Consulta consult)
+        internal Consulta RespostaDeConsultaCertidaoCasamento(Consulta consult)
         {
-            /*
-             * select
-             * <informações que quer retornar para a tela>
-             * from habilitacao 
-             * left join pessoafr ivo on ivo.codigo_pfr = ivopef_hab 
-             * left join pessoafr iva on iva.codigo_pfr = ivapef_hab
-             * where (ivo.nom_pfr = 'nome informado em tela' or iva.nom_pfr = 'nome informado em tela');
-             * OU
-             * where (ivo.cpf_pfr = 'cpf informado em tela' or iva.cpf_pfr = 'cpf informado em tela');
-             */
-            throw new NotImplementedException();
+            var parametros = consult.Parametros.Split(';');
+            var condicoes = "";
+
+
+            if (parametros[0].ToString() == "1")
+                condicoes = "where (ivo.nom_pfr = @parametros1 or iva.nom_pfr = @parametros2)";
+            else
+                condicoes = "where (ivo.cpf_pfr = @parametros1 or iva.cpf_pfr = @parametros2)";
+
+            Consulta retorno = new Consulta();
+
+            if (parametros.Length > 2)
+            using (var cmd = new MySqlCommand(@"select
+cs.livro_cas,cs.folha_cas
+from habilitacao hb
+left join pessoafr ivo on ivo.codigo_pfr = hb.ivopef_hab
+left join pessoafr iva on iva.codigo_pfr = hb.ivapef_hab
+left join casamento  cs on cs.codhab_cas = hb.codigo_hab " + condicoes, ConexaoInterna.GetInstace().Connection))
+            {
+                cmd.Parameters.AddWithValue("@parametro1", parametros[1].ToString());
+                cmd.Parameters.AddWithValue("@parametro2", parametros[2].ToString());
+
+                    var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    retorno.Resposta = reader["livro_cas"].ToString() + ";" + reader["folha_cas"].ToString();
+                }
+            }
+
+            using (var cmd = new MySqlCommand($"update {content[8]} set resposta = '{retorno.Resposta}', respondida = 1 where id  = {consult.Id}", ConexaoExterna.GetInstace().Connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            return retorno;
         }
 
-        internal void RespostaDeConsultaCertidaoNascimento(Consulta consult)
+        internal Consulta RespostaDeConsultaCertidaoNascimento(Consulta consult)
         {
-            /*
-             * select
-             * <informações que quer retornar para a tela>
-             * from nascimento
-             * left join 
-             * where nom_nas like 'nome do nascido informado em tela';
-             * ou 
-             * where cpf_nas like 'cpf do nascido informado em tela';
-             */
-            throw new NotImplementedException();
+            var parametros = consult.Parametros.Split(';');
+            var condicoes = "";
+
+
+            if (parametros[0].ToString() == "1")
+                condicoes = "where nom_nas like @parametro";
+            else
+                condicoes = "where cpf_nas like @parametro";
+
+            Consulta retorno = new Consulta();
+
+            if (parametros.Length > 1)
+                using (var cmd = new MySqlCommand(@"
+select
+nascimento.livro_nas,nascimento.folha_nas
+from nascimento " + condicoes, ConexaoInterna.GetInstace().Connection))
+                {
+                    cmd.Parameters.AddWithValue("@parametro", parametros[1].ToString());
+
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        retorno.Resposta = reader["livro_nas"].ToString() + ";" + reader["folha_nas"].ToString();
+                    }
+                }
+
+            using (var cmd = new MySqlCommand($"update {content[8]} set resposta = '{retorno.Resposta}', respondida = 1 where id  = {consult.Id}", ConexaoExterna.GetInstace().Connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            return retorno;
         }
 
         internal void RespostaDeConsultaCartaoAssinatura(Consulta consult)

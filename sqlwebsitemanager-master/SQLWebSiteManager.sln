@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2041
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLWebSiteManager", "SQLWebSiteManager\SQLWebSiteManager.csproj", "{FF60F719-057F-4BC5-ABE3-7825F3F2A907}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF60F719-057F-4BC5-ABE3-7825F3F2A907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF60F719-057F-4BC5-ABE3-7825F3F2A907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF60F719-057F-4BC5-ABE3-7825F3F2A907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF60F719-057F-4BC5-ABE3-7825F3F2A907}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4AA98C56-CD80-4A14-BCF3-263793E20950}
+	EndGlobalSection
+EndGlobal

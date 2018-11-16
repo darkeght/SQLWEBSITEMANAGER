@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -29,51 +31,108 @@ namespace SQLWebSiteManager
             GC.WaitForPendingFinalizers();
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            timer1.Start();
-        }
+        public static StringBuilder LogViewr = new StringBuilder();
 
-        private void VerifyConsultWebSite()
+        private static void VerifyConsultWebSite()
         {
-            using (ConsultSQL consultsql = ConsultSQL.GetInstace())
+            while (true)
             {
-                textBox1.Clear();
-
-                textBox1.AppendText("Iniciando consulta de perguntas para a base de dados \r\n");
-
-                Consulta consult = consultsql.ReturnConsult();
-
-                textBox1.AppendText("Pergunta encontrada iniciando tentativa de responder \r\n");
-
-                switch (consult.Tipo)
+                using (ConsultSQL consultsql = ConsultSQL.GetInstace())
                 {
-                    case 1: {
-                            textBox1.AppendText("Iniciando uma pergunta de status de protocolo \r\n");
+                    //textBox1.Clear();
 
-                            consultsql.RespostaDeConsultaPedidoCertidao(consult);
+                    LogViewr.Append("Iniciando consulta de perguntas para a base de dados \r\n");
 
-                            textBox1.AppendText("Protocolo respondido \r\n");
-                        } break;
+                    Consulta consult = consultsql.ReturnConsult();
+
+                    LogViewr.Append("Pergunta encontrada iniciando tentativa de responder \r\n");
+
+                    switch (consult.Tipo)
+                    {
+                        case 1:
+                            {
+                                LogViewr.Append("Iniciando uma pergunta de status de protocolo \r\n");
+
+                                consultsql.RespostaDeConsultaPedidoCertidao(consult);
+
+                                LogViewr.Append("Protocolo respondido \r\n");
+                            }
+                            break;
+                        case 2:
+                            {
+                                LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
+
+                                consultsql.RespostaDeConsultaCertidaoCasamento(consult);
+
+                                LogViewr.Append("Pergunta respondida \r\n");
+                            }
+                            break;
+                        case 3:
+                            {
+                                LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
+
+                                consultsql.RespostaDeConsultaCertidaoNascimento(consult);
+
+                                LogViewr.Append("Pergunta respondida \r\n");
+                            }
+                            break;
+                        case 4:
+                            {
+                                LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
+
+                                consultsql.RespostaDeConsultaCertidaoObito(consult);
+
+                                LogViewr.Append("Pergunta respondida \r\n");
+                            }
+                            break;
+                        case 5:
+                            {
+                                LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
+
+                                consultsql.RespostaDeConsultaCertidaoEscritura(consult);
+
+                                LogViewr.Append("Pergunta respondida \r\n");
+                            }
+                            break;
+                    }
+
+
+                    LogViewr.Append("Finalizando perguntas \r\n");
                 }
 
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
 
-                textBox1.AppendText("Finalizando perguntas \r\n");
+                Thread.Sleep(500);
+                LogViewr.Clear();
             }
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            VerifyConsultWebSite();
+            textBox1.Clear();
+            textBox1.AppendText(LogViewr.ToString());
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            string CompletPath = Assembly.GetExecutingAssembly().Location;
+
             Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            key.SetValue("SQL Web Site Manager", @"SQLWebSiteManager.exe");
+            key.SetValue("SQL Web Site Manager", CompletPath);
+
+            MessageBox.Show(CompletPath + " Registrado");
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+                VerifyConsultWebSite();
+            }).Start();
+
+            timer1.Start();
         }
     }
 }

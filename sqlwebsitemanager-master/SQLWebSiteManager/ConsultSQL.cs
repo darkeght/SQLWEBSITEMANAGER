@@ -242,9 +242,9 @@ left join pessoafr on codigo_pfr = codpef_obi " + condicoes, ConexaoInterna.GetI
             var condicoes = "";
 
             if (parametros[0].ToString() == "1")
-                condicoes = "where nom_pfr = @parametro1 and lavratura.tipo_lav = @parametro";
+                condicoes = "where nom_pfr = @parametro1 and tiplav_lav = @parametro";
             else
-                condicoes = "where cpf_pfr = @parametro1 and lavratura.tipo_lav = @parametro";
+                condicoes = "where cpf_pfr = @parametro1 and tiplav_lav = @parametro";
 
             Consulta retorno = new Consulta();
 

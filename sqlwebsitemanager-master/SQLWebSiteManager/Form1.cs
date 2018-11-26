@@ -103,7 +103,7 @@ namespace SQLWebSiteManager
                                     {
                                         LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
 
-                                        consultsql.RespostaDeConsultaCertidaoEscritura(consult);
+                                        consultsql.RealizaPedidoCertidao(consult);
 
                                         LogViewr.Append("Pergunta respondida \r\n");
                                     }

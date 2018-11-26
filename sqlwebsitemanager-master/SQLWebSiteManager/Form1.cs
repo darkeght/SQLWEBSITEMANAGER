@@ -99,6 +99,15 @@ namespace SQLWebSiteManager
                                         LogViewr.Append("Pergunta respondida \r\n");
                                     }
                                     break;
+                                case 6:
+                                    {
+                                        LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
+
+                                        consultsql.RespostaDeConsultaCertidaoEscritura(consult);
+
+                                        LogViewr.Append("Pergunta respondida \r\n");
+                                    }
+                                    break;
                             }
                         }
                         catch (Exception erro)

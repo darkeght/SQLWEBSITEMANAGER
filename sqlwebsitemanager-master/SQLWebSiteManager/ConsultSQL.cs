@@ -236,6 +236,22 @@ left join pessoafr on codigo_pfr = codpef_obi " + condicoes, ConexaoInterna.GetI
             return retorno;
         }
 
+
+        internal Consulta RealizaPedidoCertidao(Consulta consult)
+        {
+            Consulta retorno = new Consulta();
+            var parametros = consult.Parametros.Split(';');
+            var PessoaCodigo = 0;
+
+            using (var cmd = new MySqlCommand($"", ConexaoInterna.GetInstace().Connection))
+            {
+                cmd.ExecuteNonQuery();
+                PessoaCodigo = cmd.LastInsertedId;
+            }
+
+            return retorno;
+        }
+
         internal Consulta RespostaDeConsultaCertidaoEscritura(Consulta consult)
         {
             var parametros = consult.Parametros.Split(';');

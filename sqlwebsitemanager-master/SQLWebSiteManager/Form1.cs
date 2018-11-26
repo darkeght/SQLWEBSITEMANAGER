@@ -37,75 +37,82 @@ namespace SQLWebSiteManager
         {
             while (true)
             {
-                using (ConsultSQL consultsql = ConsultSQL.GetInstace())
+                try
                 {
-                    //textBox1.Clear();
-
-                    LogViewr.Append("Iniciando consulta de perguntas para a base de dados \r\n");
-
-                    Consulta consult = consultsql.ReturnConsult();
-
-                    LogViewr.Append("Pergunta encontrada iniciando tentativa de responder \r\n");
-
-                    try
+                    using (ConsultSQL consultsql = ConsultSQL.GetInstace())
                     {
+                        //textBox1.Clear();
 
-                        switch (consult.Tipo)
+                        LogViewr.Append("Iniciando consulta de perguntas para a base de dados \r\n");
+
+                        Consulta consult = consultsql.ReturnConsult();
+
+                        LogViewr.Append("Pergunta encontrada iniciando tentativa de responder \r\n");
+
+                        try
                         {
-                            case 1:
-                                {
-                                    LogViewr.Append("Iniciando uma pergunta de status de protocolo \r\n");
 
-                                    consultsql.RespostaDeConsultaPedidoCertidao(consult);
+                            switch (consult.Tipo)
+                            {
+                                case 1:
+                                    {
+                                        LogViewr.Append("Iniciando uma pergunta de status de protocolo \r\n");
 
-                                    LogViewr.Append("Protocolo respondido \r\n");
-                                }
-                                break;
-                            case 2:
-                                {
-                                    LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
+                                        consultsql.RespostaDeConsultaPedidoCertidao(consult);
 
-                                    consultsql.RespostaDeConsultaCertidaoCasamento(consult);
+                                        LogViewr.Append("Protocolo respondido \r\n");
+                                    }
+                                    break;
+                                case 2:
+                                    {
+                                        LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
 
-                                    LogViewr.Append("Pergunta respondida \r\n");
-                                }
-                                break;
-                            case 3:
-                                {
-                                    LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
+                                        consultsql.RespostaDeConsultaCertidaoCasamento(consult);
 
-                                    consultsql.RespostaDeConsultaCertidaoNascimento(consult);
+                                        LogViewr.Append("Pergunta respondida \r\n");
+                                    }
+                                    break;
+                                case 3:
+                                    {
+                                        LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
 
-                                    LogViewr.Append("Pergunta respondida \r\n");
-                                }
-                                break;
-                            case 4:
-                                {
-                                    LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
+                                        consultsql.RespostaDeConsultaCertidaoNascimento(consult);
 
-                                    consultsql.RespostaDeConsultaCertidaoObito(consult);
+                                        LogViewr.Append("Pergunta respondida \r\n");
+                                    }
+                                    break;
+                                case 4:
+                                    {
+                                        LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
 
-                                    LogViewr.Append("Pergunta respondida \r\n");
-                                }
-                                break;
-                            case 5:
-                                {
-                                    LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
+                                        consultsql.RespostaDeConsultaCertidaoObito(consult);
 
-                                    consultsql.RespostaDeConsultaCertidaoEscritura(consult);
+                                        LogViewr.Append("Pergunta respondida \r\n");
+                                    }
+                                    break;
+                                case 5:
+                                    {
+                                        LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
 
-                                    LogViewr.Append("Pergunta respondida \r\n");
-                                }
-                                break;
+                                        consultsql.RespostaDeConsultaCertidaoEscritura(consult);
+
+                                        LogViewr.Append("Pergunta respondida \r\n");
+                                    }
+                                    break;
+                            }
                         }
-                    }
-                    catch(Exception erro)
-                    {
-                        LogViewr.Append("Erro ao realizar pergunta \r\n");
-                    }
+                        catch (Exception erro)
+                        {
+                            LogViewr.Append("Erro ao realizar pergunta \r\n");
+                        }
 
 
-                    LogViewr.Append("Finalizando perguntas \r\n");
+                        LogViewr.Append("Finalizando perguntas \r\n");
+                    }
+                }
+                catch
+                {
+                    LogViewr.Append("Erro Ao realizar consulta \r\n");
                 }
 
                 GC.Collect();
@@ -134,13 +141,20 @@ namespace SQLWebSiteManager
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            new Thread(() =>
+            try
             {
-                Thread.CurrentThread.IsBackground = true;
-                VerifyConsultWebSite();
-            }).Start();
+                new Thread(() =>
+                {
+                    Thread.CurrentThread.IsBackground = true;
+                    VerifyConsultWebSite();
+                }).Start();
 
-            timer1.Start();
+                timer1.Start();
+            }
+            catch
+            {
+
+            }
         }
     }
 }

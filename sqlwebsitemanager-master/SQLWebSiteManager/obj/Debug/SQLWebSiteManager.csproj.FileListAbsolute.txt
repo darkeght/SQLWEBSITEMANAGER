@@ -30,3 +30,4 @@ C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteMa
 C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteManager\obj\Debug\SQLWebSiteManager.csproj.GenerateResource.Cache
 C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteManager\obj\Debug\SQLWebSiteManager.exe
 C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteManager\obj\Debug\SQLWebSiteManager.pdb
+C:\Users\Paulo\Documents\SQLWEBSITEMANAGER\sqlwebsitemanager-master\SQLWebSiteManager\obj\Debug\SQLWebSiteManager.csprojResolveAssemblyReference.cache

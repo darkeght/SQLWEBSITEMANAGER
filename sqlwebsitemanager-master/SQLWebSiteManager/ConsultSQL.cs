@@ -243,7 +243,6 @@ left join pessoafr on codigo_pfr = codpef_obi " + condicoes, ConexaoInterna.GetI
             var parametros = consult.Parametros.Split(';');
             string PessoaCodigo = "0";
             string NumeroPedido = "0";
-            var valueParns = 1;
 
             using (var cmd = new MySqlCommand(@"select  codigo_pfr from pessoafr where cpf_pfr = @cpf limit 1", ConexaoInterna.GetInstace().Connection))
             {
@@ -258,19 +257,19 @@ left join pessoafr on codigo_pfr = codpef_obi " + condicoes, ConexaoInterna.GetI
             }
 
             if(PessoaCodigo == "0")
-            using (var cmd = new MySqlCommand($"insert into pessoafr (nom_pfr,cpf_pfr,cep_pfr,end_pfr,num_pfr,bairro_pfr,cidade_pfr,uf_pfr,email_pfr,estciv_pfr,codpro_pfr) value (@nome, @cpf, @cep, @endereco, @numero, @bairro, @cidade, @estado, @email, @estadocivil, @profissao); ", ConexaoInterna.GetInstace().Connection))
+            using (var cmd = new MySqlCommand($"insert into pessoafr (nom_pfr,cpf_pfr,cep_pfr,end_pfr,num_pfr,bairro_pfr,email_pfr) value (@nome, @cpf, @cep, @endereco, @numero, @bairro, @email); ", ConexaoInterna.GetInstace().Connection))
             {
-                cmd.Parameters.AddWithValue("@nome", parametros[valueParns]);
-                cmd.Parameters.AddWithValue("@cpf", parametros[valueParns++]);
-                cmd.Parameters.AddWithValue("@cep", parametros[valueParns++]);
-                cmd.Parameters.AddWithValue("@endereco", parametros[valueParns++]);
-                cmd.Parameters.AddWithValue("@numero", parametros[valueParns++]);
-                cmd.Parameters.AddWithValue("@bairro", parametros[valueParns++]);
-                cmd.Parameters.AddWithValue("@cidade", parametros[valueParns++]);
-                cmd.Parameters.AddWithValue("@estado", parametros[valueParns++]);
-                cmd.Parameters.AddWithValue("@email", parametros[valueParns++]);
-                cmd.Parameters.AddWithValue("@estadocivil", parametros[valueParns++]);
-                cmd.Parameters.AddWithValue("@profissao", parametros[valueParns++]);
+                cmd.Parameters.AddWithValue("@nome", parametros[0]);
+                cmd.Parameters.AddWithValue("@cpf", parametros[1]);
+                cmd.Parameters.AddWithValue("@cep", parametros[6]);
+                cmd.Parameters.AddWithValue("@endereco", parametros[4]);
+                cmd.Parameters.AddWithValue("@numero", parametros[5]);
+                cmd.Parameters.AddWithValue("@bairro", parametros[7]);
+                //cmd.Parameters.AddWithValue("@cidade", parametros[8]);
+                //cmd.Parameters.AddWithValue("@estado", parametros[9]);
+                cmd.Parameters.AddWithValue("@email", parametros[3]);
+                //cmd.Parameters.AddWithValue("@estadocivil", parametros[valueParns++]);
+                //cmd.Parameters.AddWithValue("@profissao", parametros[valueParns++]);
 
                 cmd.ExecuteNonQuery();
                 PessoaCodigo = cmd.LastInsertedId.ToString();
@@ -293,20 +292,33 @@ left join pessoafr on codigo_pfr = codpef_obi " + condicoes, ConexaoInterna.GetI
 
             using (var cmd = new MySqlCommand(@"insert into pedido (tip_ped,numpro_ped,dathor_ped,codpfr_ped,obs_ped,status_ped) values  (1,@numerador,NOW(),@pessoa,@obs,1)", ConexaoInterna.GetInstace().Connection))
             {
+
+                var obs = $" - Pagamento no balcão e forma de envio {parametros[14]}";
+
+
                 cmd.Parameters.AddWithValue("@numerador", NumeroPedido);
                 cmd.Parameters.AddWithValue("@pessoa", PessoaCodigo);
-                cmd.Parameters.AddWithValue("@obs", parametros[valueParns++]);
+                cmd.Parameters.AddWithValue("@obs", obs);
+
+                var reader = cmd.ExecuteNonQuery();
+                NumeroPedido = cmd.LastInsertedId.ToString();
+            }
+
+            using (var cmd = new MySqlCommand(@"insert into pedido_certidao (codped_pec,livro_pec,folha_pec,nomreg1_pec) values (@numeropedidod,@livro,@folha,@nome);", ConexaoInterna.GetInstace().Connection))
+            {
+                cmd.Parameters.AddWithValue("@numeropedidod", NumeroPedido);
+                cmd.Parameters.AddWithValue("@livro", parametros[11]);
+                cmd.Parameters.AddWithValue("@folha", parametros[12]);
+                cmd.Parameters.AddWithValue("@nome", parametros[15].Replace("%20"," "));
 
                 var reader = cmd.ExecuteNonQuery();
             }
 
-            using (var cmd = new MySqlCommand(@"insert into pedido_certidao (livro_pec,folha_pec) values (@livro,@folha,);", ConexaoInterna.GetInstace().Connection))
-            {
-                cmd.Parameters.AddWithValue("@numerador", NumeroPedido);
-                cmd.Parameters.AddWithValue("@pessoa", PessoaCodigo);
-                cmd.Parameters.AddWithValue("@obs", parametros[valueParns++]);
+            retorno.Resposta = NumeroPedido.ToString();
 
-                var reader = cmd.ExecuteNonQuery();
+            using (var cmd = new MySqlCommand($"update {content[8]} set resposta = '{retorno.Resposta}', respondida = 1 where id  = {consult.Id}", ConexaoExterna.GetInstace().Connection))
+            {
+                cmd.ExecuteNonQuery();
             }
 
             return retorno;

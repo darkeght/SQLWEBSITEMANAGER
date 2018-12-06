@@ -41,8 +41,6 @@ namespace SQLWebSiteManager
                 {
                     using (ConsultSQL consultsql = ConsultSQL.GetInstace())
                     {
-                        //textBox1.Clear();
-
                         LogViewr.Append("Iniciando consulta de perguntas para a base de dados \r\n");
 
                         Consulta consult = consultsql.ReturnConsult();
@@ -104,6 +102,15 @@ namespace SQLWebSiteManager
                                         LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
 
                                         consultsql.RealizaPedidoCertidao(consult);
+
+                                        LogViewr.Append("Pergunta respondida \r\n");
+                                    }
+                                    break;
+                                case 7:
+                                    {
+                                        LogViewr.Append("Iniciando uma pergunta de certidão de nascimento \r\n");
+
+                                        consultsql.RespostaDeConsultaLavratura(consult);
 
                                         LogViewr.Append("Pergunta respondida \r\n");
                                     }

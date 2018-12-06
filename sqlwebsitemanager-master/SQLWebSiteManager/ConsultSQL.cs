@@ -243,6 +243,7 @@ left join pessoafr on codigo_pfr = codpef_obi " + condicoes, ConexaoInterna.GetI
             var parametros = consult.Parametros.Split(';');
             string PessoaCodigo = "0";
             string NumeroPedido = "0";
+            string NumeroProtocoloPedido = "0";
 
             using (var cmd = new MySqlCommand(@"select  codigo_pfr from pessoafr where cpf_pfr = @cpf limit 1", ConexaoInterna.GetInstace().Connection))
             {
@@ -281,7 +282,7 @@ left join pessoafr on codigo_pfr = codpef_obi " + condicoes, ConexaoInterna.GetI
 
                 while (reader.Read())
                 {
-                    NumeroPedido = reader["proreg_num"].ToString();
+                    NumeroProtocoloPedido = reader["proreg_num"].ToString();
                 }
             }
 
@@ -293,10 +294,9 @@ left join pessoafr on codigo_pfr = codpef_obi " + condicoes, ConexaoInterna.GetI
             using (var cmd = new MySqlCommand(@"insert into pedido (tip_ped,numpro_ped,dathor_ped,codpfr_ped,obs_ped,status_ped) values  (1,@numerador,NOW(),@pessoa,@obs,1)", ConexaoInterna.GetInstace().Connection))
             {
 
-                var obs = $" - Pagamento no balcão e forma de envio {parametros[14]}";
+                var obs = $" - Pagamento via deposito e forma de envio {parametros[14]}";
 
-
-                cmd.Parameters.AddWithValue("@numerador", NumeroPedido);
+                cmd.Parameters.AddWithValue("@numerador", NumeroProtocoloPedido);
                 cmd.Parameters.AddWithValue("@pessoa", PessoaCodigo);
                 cmd.Parameters.AddWithValue("@obs", obs);
 
@@ -304,17 +304,18 @@ left join pessoafr on codigo_pfr = codpef_obi " + condicoes, ConexaoInterna.GetI
                 NumeroPedido = cmd.LastInsertedId.ToString();
             }
 
-            using (var cmd = new MySqlCommand(@"insert into pedido_certidao (codped_pec,livro_pec,folha_pec,nomreg1_pec) values (@numeropedidod,@livro,@folha,@nome);", ConexaoInterna.GetInstace().Connection))
+            using (var cmd = new MySqlCommand(@"insert into pedido_certidao (codped_pec,livro_pec,folha_pec,nomreg1_pec,tipcer_pec,codsit_pec) values (@numeropedidod,@livro,@folha,@nome,@tipocert,1);", ConexaoInterna.GetInstace().Connection))
             {
                 cmd.Parameters.AddWithValue("@numeropedidod", NumeroPedido);
                 cmd.Parameters.AddWithValue("@livro", parametros[11]);
-                cmd.Parameters.AddWithValue("@folha", parametros[12]);
+                cmd.Parameters.AddWithValue("@folha", parametros[12]); 
                 cmd.Parameters.AddWithValue("@nome", parametros[15].Replace("%20"," "));
+                cmd.Parameters.AddWithValue("@tipocert", parametros[10]);
 
                 var reader = cmd.ExecuteNonQuery();
             }
 
-            retorno.Resposta = NumeroPedido.ToString();
+            retorno.Resposta = NumeroProtocoloPedido.ToString();
 
             using (var cmd = new MySqlCommand($"update {content[8]} set resposta = '{retorno.Resposta}', respondida = 1 where id  = {consult.Id}", ConexaoExterna.GetInstace().Connection))
             {
@@ -323,6 +324,30 @@ left join pessoafr on codigo_pfr = codpef_obi " + condicoes, ConexaoInterna.GetI
 
             return retorno;
         }
+
+        internal Consulta RespostaDeConsultaLavratura(Consulta consult)
+        {
+            Consulta retorno = new Consulta();
+
+            using (var cmd = new MySqlCommand(@"select  descri_les from lavratura lav left join lavratura_estagio lave on lav.codest_lav = lave.codigo_les where numpro_lav = @numeroproc;", ConexaoInterna.GetInstace().Connection))
+            {
+                cmd.Parameters.AddWithValue("@numeroproc", consult.Parametros);
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    retorno.Resposta = reader["descri_les"].ToString();
+                }
+            }
+
+            using (var cmd = new MySqlCommand($"update {content[8]} set resposta = '{retorno.Resposta}', respondida = 1 where id  = {consult.Id}", ConexaoExterna.GetInstace().Connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
+
+            return retorno;
+        } 
 
         internal Consulta RespostaDeConsultaCertidaoEscritura(Consulta consult)
         {
